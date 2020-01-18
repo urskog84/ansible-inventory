@@ -1,0 +1,20 @@
+---
+- hosts: win
+  tasks:
+  - name: Test connection with win_ping module
+    win_ping:
+
+  - name: Create file folder C:\Temp
+    win_file:
+      path: C:\Temp
+      state: directory
+
+  - name: Create file foo
+    win_file:
+      path: C:\Temp\foo.txt
+      state: touch
+
+  - name: Install notepadplusplus version
+    win_chocolatey:
+      name: notepadplusplus
+    

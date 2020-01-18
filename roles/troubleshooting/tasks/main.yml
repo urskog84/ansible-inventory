@@ -1,0 +1,12 @@
+---
+- name: gather interface counter
+  ios_command:
+    commands: sh interface fa0/2
+  register: interface_info
+
+- name: debug var
+  debug:
+    msg: "{{ interface_info.stdout_lines[0] | to_nice_json }}"
+
+- name: Save Output to file
+  local_action: lineinfile  line={{ interface_info.stdout_lines[0] | to_nice_json }} path=/GIT/ansible-inventory/file1.txt

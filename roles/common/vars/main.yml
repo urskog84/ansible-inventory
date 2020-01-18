@@ -1,0 +1,10 @@
+vlan_list:
+  - name: abc 
+    id: 5
+  - name: cde
+    id: 6
+  - name: cde
+    id: 7
+  - name: cde
+    id: 8
+

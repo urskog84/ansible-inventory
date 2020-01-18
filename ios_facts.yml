@@ -1,0 +1,13 @@
+- hosts: ios
+  gather_facts: false
+
+  tasks:
+   - name: get ios facts
+     ios_facts:
+       gather_subset: min
+     register: facts_data
+
+
+   - name: debug list
+     debug:
+       msg: "{{ ansible_net_interfaces }}"

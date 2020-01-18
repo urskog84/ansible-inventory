@@ -1,0 +1,46 @@
+---
+- hosts: docker_host
+  vars:
+    work_path: /home/petter/ansible_workdir/pyats_version_test
+  tasks:
+  - name: cone git repo
+    git:
+      repo: https://github.com/urskog84/pyats_version_test.git
+      dest: "{{ work_path }}"
+      version: master
+  
+  - name: Build contaner
+    docker_image:
+      build:
+        path: "{{ work_path }}"
+        dockerfile: Dockerfile
+        pull: yes
+      name: pyats
+      source: build
+      rm: yes
+    register: build_step
+
+  - name: debug Build step
+    debug:
+      msg: "{{ build_step | to_nice_json }}"
+
+  - name: start the Container
+    docker_container:
+      name: pyats
+      image: pyats
+      volumes: "{{ work_path }}:/pyats_local"
+
+  - name: Sending an e-mail using Gmail SMTP servers
+    mail:
+      host: mailout.privat.bahnhof.se
+      port: 465
+      secure: always
+      username: mb327082 #@bahnhof.se
+      password: YTUgX0n7My0k
+      from: mb327082@bahnhof.se
+      to: John Smith <karl.petter.fors@gmail.com>
+      subject: Ansible-report
+      body: System {{ ansible_hostname }} has been successfully provisioned.
+      attach:
+        - "{{ work_path }}/html_logs/TaskLog.html"
+      

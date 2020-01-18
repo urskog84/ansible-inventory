@@ -1,0 +1,12 @@
+router eigrp 2
+!
+ address-family ipv4 vrf BOBO unicast autonomous-system 10 
+  passive-interface default
+ exit-address-family
+!
+ address-family ipv4 vrf BABA unicast autonomous-system 20 
+  network 10.85.74.0 0.0.0.255 
+  passive-interface default
+  no passive-interface Tunnel74
+ exit-address-family
+!

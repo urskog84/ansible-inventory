@@ -1,0 +1,5 @@
+---
+- hosts: site_switches
+  gather_facts: false
+  roles:
+    - ansible-pyats

@@ -1,0 +1,9 @@
+!
+ address-family ipv4 vrf STUDIO autonomous-system 28
+  network 172.16.15.0 0.0.0.15
+  network 172.30.97.0 0.0.0.255
+  passive-interface default
+  no passive-interface TenGigabitEthernet0/0/0.1032
+  no passive-interface Tunnel97
+ exit-address-family
+!

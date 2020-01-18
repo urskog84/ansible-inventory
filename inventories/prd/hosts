@@ -1,0 +1,14 @@
+[ios:children]
+site_switches
+
+[site_switches]
+192.168.1.188
+
+#[console]
+#cisco2901con ansible_host=192.168.1.166 ansible_port=2003
+#
+#[docker_host]
+#petter-MS-7798 ansible_host=192.168.1.166 ansible_user=petter ansible_password=urskog8400
+#
+#[win]
+#172.17.118.20

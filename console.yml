@@ -1,0 +1,6 @@
+---
+- hosts: console
+  tasks:
+  - name: a 
+    ios_command:  
+      commands: show version

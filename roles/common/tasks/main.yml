@@ -1,0 +1,49 @@
+---
+#- name: config 
+#  ios_config:    
+#    lines: 
+#     - snmp-server location Building 3/Room 21
+#
+#- name: gatherfacts
+#  ios_facts:
+#    gather_subset: all # not required. When supplied, this argument will restrict the facts collected to a given subset.  Possible values for this argument include all, hardware, config, and interfaces.  Can specify a list of values to include a larger subset.  Values can also be used with an initial C(M(!)) to specify that a specific subset should not be collected.
+#  register: ios_interface
+#  
+#- name: debug task
+#  debug:
+#    msg: "{{ ios_interface }}"
+#
+- name: create comma separeate list from list
+  set_fact:
+    vlan_comma: "{{ lookup('template', './vlan_list.j2') }}"
+
+
+- name: conf trunk to
+  ios_l2_interface:
+      name: GigabitEthernet0/1
+      state: present
+      trunk_allowed_vlans: "{{ vlan_comma }}"
+      mode: trunk
+
+- name: set hostname and syslocation
+  ios_config:
+    lines:
+     - snmp-server location {{ location }}
+     - hostname {{ hostname }}
+
+- name: conf inte fa0
+  ios_config:
+    lines:
+      - switchport access vlan {{ access_vlan | default(100) }}
+    parents: interface FastEthernet0/6
+
+      
+
+- name: get output
+  ios_command:
+    commands: show run int FastEthernet0/6
+  register: command_output
+
+- name: print output
+  debug:
+    msg: "{{ command_output.stdout_lines }}"

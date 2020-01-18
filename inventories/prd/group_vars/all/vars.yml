@@ -1,0 +1,5 @@
+vrfs:
+  - name: BOBO
+    autonomous_system: 10
+  - name: BABA
+    autonomous_system: 20

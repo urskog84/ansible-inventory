@@ -1,0 +1,11 @@
+---
+- name: deplay interface template
+  ios_config:
+    lines:
+     - description CAPWAP
+     - switchport mode trunk
+     - switchport trunk native vlan 100
+    parents: interface {{ item }}
+    before: default interface {{ item }}
+  with_items: "{{ int_list }}"
+  

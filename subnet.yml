@@ -1,0 +1,29 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars: 
+    subnets:
+      - subnet: 192.168.100.4/24
+        description: firstNet
+        interface: bond0
+        vlanid: 30
+      - subnet: 192.168.60.6/24
+        description: Secondnet
+        interface: bond1
+        vlanid: 50
+  tasks:
+  - name: test sunet funtion
+    debug:
+      msg: | 
+            "add interface {{ item.interface }}.{{ item.vlanid }}"
+            "set interface {{ item.interface }}.{{ item.vlanid }}"
+            "ipv4-address {{ item.subnet | ipaddr('network') | ipmath(5) }} mask-length {{ item.subnet | ipaddr('prefix') }}"
+    with_items: "{{ subnets }}"
+    when: ""
+    
+
+
+#add interface <IF> vlan <VLAN ID>
+#set interface <IF> <VLAN ID>
+#< ipv4-address <IP> mask-length <Length>|subnet-mask<Mask>

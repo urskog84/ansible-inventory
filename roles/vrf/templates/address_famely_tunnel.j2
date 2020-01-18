@@ -1,0 +1,20 @@
+router eigrp 2
+!
+{% for vrf in vrfs %}
+ address-family ipv4 vrf {{ vrf.name }} unicast autonomous-system {{ vrf.autonomous_system }} 
+{% set query = '[?vrf == \''+ vrf.name + '\'].name' %}
+{% set interfaces = tunnel_nets | json_query(query)%}
+{% for intf in interfaces %}
+{% set query1 = '[?name == \''+ intf + '\']' %}
+{% set interface = tunnel_nets | json_query(query1)%}
+  network {{ (interface[0].ip+'/'+interface[0].mask)|ipaddr('network') }} {{ (interface[0].ip+'/'+interface[0].mask)|ipaddr('wildcard') }} 
+{% endfor %}
+  passive-interface default
+{% for intf in interfaces %}
+{% set query1 = '[?name == \''+ intf + '\']' %}
+{% set interface = tunnel_nets | json_query(query1)%}
+  no passive-interface {{ interface[0].name }}
+{% endfor %}
+ exit-address-family
+!
+{% endfor %}

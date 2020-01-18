@@ -1,0 +1,10 @@
+{% for item in int_list %}
+!
+default interface {{ item }}
+!
+interface {{ item }}
+ no description
+ description CAPWAP
+ switchport mode trunk
+ switchport trunk native vlan 100
+{% endfor %}

@@ -1,0 +1,150 @@
+Building configuration...
+
+Current configuration : 3777 bytes
+!
+! Last configuration change at 19:24:00 UTC Thu Mar 21 2019 by admin
+! NVRAM config last updated at 12:21:23 UTC Sun Mar 17 2019 by admin
+!
+version 15.0
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec localtime show-timezone
+no service password-encryption
+!
+hostname switch-1
+!
+boot-start-marker
+boot-end-marker
+!
+logging userinfo
+enable password truhe8a8
+!
+username admin password 0 truhe8a8
+no aaa new-model
+system mtu routing 1546
+!
+!
+ip domain-name humlevagen.se
+!
+!
+crypto pki trustpoint TP-self-signed-4268639232
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-4268639232
+ revocation-check none
+ rsakeypair TP-self-signed-4268639232
+!
+!
+crypto pki certificate chain TP-self-signed-4268639232
+ certificate self-signed 01
+  3082024C 308201B5 A0030201 02020101 300D0609 2A864886 F70D0101 04050030 
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 34323638 36333932 3332301E 170D3933 30333031 30303031 
+  34365A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D34 32363836 
+  33393233 3230819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281 
+  8100BBD8 F755715F F6A2DD46 A6934BB0 AD2A3074 985B3CD5 AB7852C4 26BAAAA3 
+  9F3BCEC3 1A4F0C79 86A5D10B 260B0F60 34493497 A6D16A3D 2B8805E5 146A629F 
+  EFE57E00 664E4EF1 DFAE9216 798C047B 08581EE0 4B454DC2 5BA032C8 723AB15F 
+  1116349B 21F39D36 E2B1A7EC 0718D3EA 0F582A77 74F7D149 6F1D0152 0D2B3BAE 
+  96390203 010001A3 74307230 0F060355 1D130101 FF040530 030101FF 301F0603 
+  551D1104 18301682 14537769 7463682E 68756D6C 65766167 656E2E73 65301F06 
+  03551D23 04183016 8014CDB9 9D0EAEC6 CCF1854B 50265EBA A4D07FCC B0AA301D 
+  0603551D 0E041604 14CDB99D 0EAEC6CC F1854B50 265EBAA4 D07FCCB0 AA300D06 
+  092A8648 86F70D01 01040500 03818100 00EFEF16 D0208219 38CAFFA3 373A8A97 
+  622AD6C1 B8BCA70F 9F9A422E 4E4B4694 48EC03FB C9F49371 9FFAA6AF 4FB29203 
+  34CDB4BF D65BC5C5 3C12E22B FB4D49E4 D193178C EA472A26 E49D1B38 B5C7FDB2 
+  9000B3BA B2C77867 CC280F7E 07E4F878 8485CC07 FDF9ACDB 97A5A83F AC421159 
+  11937422 D431D95F 7F5376F7 525692A2
+  	quit
+!
+!
+!
+!
+!
+archive
+ log config
+  logging enable
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+ip ssh version 2
+ip ssh dh min size 4096
+!
+!
+!
+!
+!
+interface FastEthernet0/1
+ description test-interface
+ switchport access vlan 20
+ switchport mode access
+!
+interface FastEthernet0/2
+ description CAPWAP
+!
+interface FastEthernet0/3
+ switchport trunk native vlan 100
+ switchport mode trunk
+!
+interface FastEthernet0/4
+ switchport access vlan 200
+!
+interface FastEthernet0/5
+ description test-interface
+ switchport access vlan 200
+!
+interface FastEthernet0/6
+ switchport access vlan 100
+!
+interface FastEthernet0/7
+ switchport access vlan 200
+!
+interface FastEthernet0/8
+ description apa-banan
+ switchport access vlan 200
+!
+interface GigabitEthernet0/1
+ switchport trunk allowed vlan 5-8
+ switchport mode trunk
+!
+interface Vlan1
+ no ip address
+ no ip route-cache
+!
+interface Vlan99
+ description test interface
+ ip address 172.31.1.1 255.255.255.0
+!
+interface Vlan200
+ ip address dhcp hostname Cisco-SW
+ no ip route-cache
+!
+ip http server
+ip http secure-server
+logging source-interface Vlan200
+logging host 192.168.1.3 transport tcp port 1514
+snmp-server group SNMPgroup v3 priv 
+snmp-server community Humlan RO
+snmp-server community public RO
+snmp-server location Holgers Rum golv
+snmp-server contact admin@humlevagen.se
+!
+vstack
+!
+line con 0
+ password truhe8a8
+ login local
+line vty 0 4
+ session-timeout 3600 
+ password truhe8a8
+ login local
+line vty 5 14
+ password truhe8a8
+ login local
+line vty 15
+ login
+!
+ntp server 3.se.pool.ntp.org
+end
