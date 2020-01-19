@@ -1,13 +1,9 @@
-- name: debug linknets
-  debug:
-    msg: "{{ link_nets | to_nice_json }}"
-
 - name: build template
   template:
     src: address_famely.j2
-    dest: "{{ inventory_hostname  }}.txt"
+    dest: "output/{{ inventory_hostname  }}.txt"
 
 - name: build template for tunnels
   template:
     src: address_famely_tunnel.j2
-    dest: "{{ inventory_hostname  }}_tunnel.txt"
+    dest: "output/{{ inventory_hostname  }}_tunnel.txt"

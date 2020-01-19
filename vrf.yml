@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: ios
   roles:
     - vrf
   gather_facts: false
