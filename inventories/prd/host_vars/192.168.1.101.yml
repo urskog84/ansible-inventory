@@ -1,0 +1,11 @@
+location: Holgers Rum golv
+#access_vlan: 50
+link_nets:
+  - { name: Vlan1030, ip: 10.85.0.14, mask: 255.255.255.240, vrf: BOBO }
+  - { name: Vlan1031, ip: 10.85.1.14, mask: 255.255.255.240, vrf: BOBO }
+  - { name: Vlan1030, ip: 10.86.0.14, mask: 255.255.255.240, vrf: BABA }
+  - { name: Vlan1031, ip: 10.86.1.14, mask: 255.255.255.240, vrf: BABA }
+
+tunnel_nets:
+  - { name: Tunnel72, ip: 172.16.72.14, mask: 255.255.255.0, vrf: FOTO }
+  - { name: Tunnel74, ip: 10.85.74.14, mask: 255.255.255.0, vrf: BABA }
